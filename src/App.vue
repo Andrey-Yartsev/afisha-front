@@ -1,13 +1,11 @@
 <template>
   <div id="app" class="">
-
-    <nav id="navbar" class="bd-navbar navbar has-shadow is-spaced">
+    <nav id="navbar">
       <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png"
-                 alt="Bulma: Free, open source, &amp; modern CSS framework based on Flexbox" width="112" height="28">
-          </a>
+        <div class="logo">
+          <router-link to="/">
+            AFISHA NN
+          </router-link>
         </div>
       </div>
     </nav>

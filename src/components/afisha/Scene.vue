@@ -1,7 +1,9 @@
 <template>
   <div>
     <Datepicker :lang="lang" v-model="date" />
-    <Card v-for="(v, i) in cards" :card="v" :key="i" />
+    <div class="events list">
+      <Card v-for="(v, i) in cards" :card="v" :key="i" />
+    </div>
   </div>
 </template>
 
@@ -31,15 +33,17 @@ import moment from 'moment';
       };
     },
     computed: {
+      cards() {
+        return this.$store.state.afisha.fetchResult;
+      }
+    },
+    methods: {
       fetch() {
         if (this.$route.params.dt) {
           this.$store.dispatch("afisha/fetch", this.$route.params.dt);
         } else {
           this.$store.dispatch("afisha/fetch");
         }
-      },
-      cards() {
-        return this.$store.state.afisha.fetchResult;
       }
     },
     watch: {
