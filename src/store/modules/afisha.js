@@ -24,6 +24,22 @@ createRequestAction({
   }
 });
 
+createRequestAction({
+  prefix: "fetchExists",
+  requestType: "no-token",
+  apiPath: "events/exists/{month}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "GET"
+  },
+  defaultResultValue: [],
+  paramsToPath: function(params, path) {
+    return path.replace(/{month}/, params);
+  }
+});
+
 export default {
   namespaced: true,
   state,

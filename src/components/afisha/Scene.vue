@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Datepicker :lang="lang" v-model="date" />
+    <Datepicker
+      v-if="!existsLoading"
+      :lang="lang"
+      v-model="date"
+      :disabled-days="isDisabledDay"
+      :calendar-change="calendarChanged"
+    />
     <div class="events list">
       <Card v-for="(v, i) in cards" :card="v" :key="i" />
     </div>
@@ -8,8 +14,8 @@
 </template>
 
 <script>
-  import Card from "./Card";
-  import Datepicker from 'vue2-datepicker';
+import Card from "./Card";
+import Datepicker from 'vue2-datepicker';
 import moment from 'moment';
 
   export default {
@@ -29,12 +35,19 @@ import moment from 'moment';
             date: 'Select Date',
             dateRange: 'Select Date Range'
           }
-        }
+        },
+        curMonth: 0
       };
     },
     computed: {
       cards() {
         return this.$store.state.afisha.fetchResult;
+      },
+      existsLoading() {
+        return this.$store.state.afisha.fetchExistsLoading;
+      },
+      existsSet() {
+        return this.$store.state.afisha.fetchExistsResult;
       }
     },
     methods: {
@@ -44,11 +57,21 @@ import moment from 'moment';
         } else {
           this.$store.dispatch("afisha/fetch");
         }
+        this.$store.dispatch("afisha/fetchExists", this.curMonth);
+      },
+      isDisabledDay(date) {
+        const day = moment(date).format("DD.MM");
+        return !(this.existsSet.indexOf(day) !== -1);
+      },
+      calendarChanged(date) {
+        console.log("CAL", date);
       }
     },
     watch: {
       date(dt) {
-        const _dt = moment(dt).format('DD.MM');
+        const mo = moment(dt);
+        const _dt = mo.format('DD.MM');
+        this.curMonth = mo.format('M');
         this.$router.push("/afisha/" + _dt);
       },
       $route() {
@@ -56,6 +79,7 @@ import moment from 'moment';
       }
     },
     created() {
+      this.curMonth = moment().format("M");
       this.fetch();
     }
   }
