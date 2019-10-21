@@ -8,7 +8,13 @@
       :calendar-change="calendarChanged"
     />
     <div class="events list">
-      <Card v-for="(v, i) in cards" :card="v" :key="i" />
+      <Card
+        v-for="(v, i) in cards"
+        :card="v"
+        :key="i"
+        :ref="'card' + i"
+        @toggle="opened => closeExcepting(opened, i)"
+      />
     </div>
   </div>
 </template>
@@ -65,6 +71,16 @@ import moment from 'moment';
       },
       calendarChanged(date) {
         console.log("CAL", date);
+      },
+      closeExcepting(opened, i) {
+        if (!opened) {
+          return;
+        }
+        this.cards.forEach((v, n) => {
+          if (i !== n) {
+            this.$refs['card' + n][0].close();
+          }
+        });
       }
     },
     watch: {

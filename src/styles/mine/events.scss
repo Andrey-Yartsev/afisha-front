@@ -1,9 +1,24 @@
 .events {
   margin-top: 20px;
 
-  .card {
+  .item {
     float: left;
-    width: 50%;
+    width: calc(50% - 15px);
     height: 150px;
+    position: relative;
+    margin: 0 15px 15px 0;
+    background: aliceblue;
+    border-radius: 10px;
+
+    .content {
+      padding: 15px;
+
+      &.opened {
+        position: absolute;
+        background: #fff;
+        z-index: 10;
+        box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
+      }
+    }
   }
 }
