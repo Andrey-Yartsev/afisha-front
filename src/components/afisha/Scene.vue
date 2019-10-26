@@ -5,7 +5,8 @@
       :lang="lang"
       v-model="date"
       :disabled-days="isDisabledDay"
-      :calendar-change="calendarChanged"
+      @change="closeAll"
+      @calendar-change="calendarChanged"
     />
     <div class="events list">
       <Card
@@ -80,6 +81,11 @@ import moment from 'moment';
           if (i !== n) {
             this.$refs['card' + n][0].close();
           }
+        });
+      },
+      closeAll() {
+        this.cards.forEach((v, n) => {
+          this.$refs['card' + n][0].close();
         });
       }
     },
