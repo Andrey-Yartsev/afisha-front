@@ -5,6 +5,7 @@
       :lang="lang"
       v-model="date"
       :disabled-days="isDisabledDay"
+      format="DD.MM.YYYY"
       @change="closeAll"
       @calendar-change="calendarChanged"
     />
@@ -24,6 +25,18 @@
 import Card from "./Card";
 import Datepicker from 'vue2-datepicker';
 import moment from 'moment';
+
+const orderCards = cards => {
+  return cards.sort((a, b) => {
+    if (a.eventDt[0] < b.eventDt[0]) {
+      return -1;
+    } else if (a.eventDt[0] > b.eventDt[0]) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+};
 
   export default {
     name: "AfishaScene",
@@ -48,7 +61,8 @@ import moment from 'moment';
     },
     computed: {
       cards() {
-        return this.$store.state.afisha.fetchResult;
+        let r = [... this.$store.state.afisha.fetchResult];
+        return orderCards(r);
       },
       existsLoading() {
         return this.$store.state.afisha.fetchExistsLoading;
@@ -94,13 +108,19 @@ import moment from 'moment';
         const mo = moment(dt);
         const _dt = mo.format('DD.MM');
         this.curMonth = mo.format('M');
-        this.$router.push("/afisha/" + _dt);
+        if (this.$route.params.dt !== _dt) {
+          this.$router.push("/afisha/" + _dt);
+        }
       },
       $route() {
         this.fetch();
       }
     },
     created() {
+      if (this.$route.params.dt) {
+        const curDate = moment(this.$route.params.dt, 'DD.MM');
+        this.date = curDate.toDate();
+      }
       this.curMonth = moment().format("M");
       this.fetch();
     }

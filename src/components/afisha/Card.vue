@@ -1,61 +1,80 @@
 <template>
   <div class="item">
-      <!--
-      <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-          </figure>
-        </div>
-      </div>
-      -->
-      <div class="content" :class="{ opened }">
-        <span v-if="opened"><a href="" @click.prevent="toggle">скрыть</a><br></span>
-        <span v-html="text"></span>
-        <span ref="text" style="display: none" v-html="card.text"></span>
-        &nbsp;<a href="" @click.prevent="toggle" v-if="!opened">показать</a>
+    <!--
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+        </figure>
       </div>
     </div>
+    -->
+    <div class="content" :class="{ opened }">
+      <div class="header">
+        <span class="date">{{ time }}</span>
+        <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
+      </div>
+      <span v-html="text"></span>
+      <span ref="text" style="display: none" v-html="card.text"></span>
+    </div>
+  </div>
 </template>
 
 <script>
+  import moment from "moment";
+
+  const stripHtml = html => {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
 
   export default {
     name: "AfishaCard",
     props: {
       card: Object
     },
-    data() {
+    data () {
       return {
         opened: false,
-        rText: "",
+        rText: ""
       };
     },
     computed: {
-      text() {
+      text () {
         let text;
         text = this.rText || this.card.text;
         if (this.opened) {
           return text;
         } else {
-          return text.substring(0, 100);
+          return stripHtml(text).substring(0, 150);
         }
+      },
+      time() {
+        const m = moment(this.card.eventDt[0]);
+        if (m.format("H") === "0" && m.format("m") === "1") {
+          return null;
+        }
+        if (m.format("H") === "0" && m.format("m") === "0") {
+          return null;
+        }
+        return m.format("H:mm");
       }
     },
     methods: {
-      toggle() {
+      toggle () {
         this.opened = !this.opened;
         this.$emit("toggle", this.opened);
       },
-      close() {
+      close () {
         this.opened = false;
       }
     },
-    mounted() {
+    mounted () {
       this.$nextTick(() => {
         const links = this.$refs.text.getElementsByTagName("a");
         let replaced = false;
-        for (let i=0; i<links.length; i++) {
+        for (let i = 0; i < links.length; i++) {
           let href = links[i].getAttribute("href");
           if (href.substring(0, 1) === "/") {
             links[i].setAttribute("href", "https://vk.com" + href);
