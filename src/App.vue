@@ -4,7 +4,7 @@
       <div class="container">
         <div class="logo">
           <router-link to="/">
-            AFISHA NN
+            <img src="/img/logo.png" />
           </router-link>
         </div>
       </div>
