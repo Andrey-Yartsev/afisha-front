@@ -1,5 +1,7 @@
 <template>
-  <div id="app" class="">
+  <div id="app">
+    <AllModals />
+
     <nav id="navbar">
       <div class="container">
         <div class="logo">
@@ -10,7 +12,6 @@
       </div>
     </nav>
 
-
     <div class="container">
       <div class="bd">
         <router-view/>
@@ -20,8 +21,14 @@
 </template>
 
 <script>
+  import AllModals from "@/components/modal/AllModals";
+
   export default {
-    name: 'app'
+    name: 'app',
+
+    components: {
+      AllModals
+    }
   }
 </script>
 

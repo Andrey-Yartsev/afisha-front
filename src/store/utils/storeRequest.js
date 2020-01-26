@@ -68,7 +68,7 @@ const storeRequest = (
             r = await response.json();
           } catch (e) {
             dispatch(
-              "global/setError",
+              "request/setError",
               { message: "Server error" },
               { root: true }
             );
@@ -79,7 +79,7 @@ const storeRequest = (
           if (localError) {
             commit(prefix + "Error", r.error);
           } else {
-            dispatch("global/setError", r.error, { root: true });
+            dispatch("request/setError", r.error, { root: true });
           }
           commit(prefix + "Success", false);
           commit(prefix + "Requested");
@@ -98,7 +98,7 @@ const storeRequest = (
         if (localError) {
           commit(prefix + "Error", error);
         } else {
-          dispatch("global/setError", error, { root: true });
+          dispatch("request/setError", error, { root: true });
         }
         reject(error);
       });
