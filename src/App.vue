@@ -6,7 +6,7 @@
       <div class="container">
         <div class="logo">
           <router-link to="/">
-            <img src="/img/logo.png" />
+            <h2 class="title is-1">a-nn.club</h2>
           </router-link>
         </div>
       </div>

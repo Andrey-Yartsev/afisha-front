@@ -2,7 +2,7 @@
   <div>
     <div class="columns">
       <div class="column is-four-fifths">
-        <h1 class="title is-3">{{ date ? 'Афиша на ' + day : 'Афиша за текущий месяц' }}</h1>
+        <h2 class="title is-3">{{ date ? 'Афиша на ' + day : 'Афиша за все время' }}</h2>
       </div>
       <div class="column">
         <Datepicker
