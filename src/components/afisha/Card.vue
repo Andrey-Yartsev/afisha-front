@@ -11,7 +11,7 @@
     -->
     <div class="content" :class="{ opened }">
       <div class="header">
-        <span class="date">{{ time }}</span>
+        <span class="date">{{ day }}{{ time || 'см. содержание' }}</span>
         <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
       </div>
       <span v-html="text"></span>
@@ -32,7 +32,11 @@
   export default {
     name: "AfishaCard",
     props: {
-      card: Object
+      card: Object,
+      showDay: {
+        type: Boolean,
+        default: false
+      }
     },
     data () {
       return {
@@ -50,15 +54,24 @@
           return stripHtml(text).substring(0, 150);
         }
       },
+      moment() {
+        return moment(this.card.eventDt[0]);
+      },
       time() {
-        const m = moment(this.card.eventDt[0]);
+        const m = this.moment;
         if (m.format("H") === "0" && m.format("m") === "1") {
           return null;
         }
         if (m.format("H") === "0" && m.format("m") === "0") {
           return null;
         }
-        return m.format("H:mm");
+        return m.format("HH:mm");
+      },
+      day() {
+        if (!this.showDay) {
+          return null;
+        }
+        return this.moment.format("D.MM") + " — ";
       }
     },
     methods: {
@@ -72,6 +85,9 @@
     },
     mounted () {
       this.$nextTick(() => {
+        if (!this.$refs.text) {
+          return;
+        }
         const links = this.$refs.text.getElementsByTagName("a");
         let replaced = false;
         for (let i = 0; i < links.length; i++) {

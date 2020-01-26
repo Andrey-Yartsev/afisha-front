@@ -16,27 +16,28 @@
         :key="i"
         :ref="'card' + i"
         @toggle="opened => closeExcepting(opened, i)"
+        :showDay="!date"
       />
     </div>
   </div>
 </template>
 
 <script>
-import Card from "./Card";
-import Datepicker from 'vue2-datepicker';
-import moment from 'moment';
+  import Card from "./Card";
+  import Datepicker from 'vue2-datepicker';
+  import moment from 'moment';
 
-const orderCards = cards => {
-  return cards.sort((a, b) => {
-    if (a.eventDt[0] < b.eventDt[0]) {
-      return -1;
-    } else if (a.eventDt[0] > b.eventDt[0]) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-};
+  const orderCards = cards => {
+    return cards.sort((a, b) => {
+      if (a.eventDt[0] < b.eventDt[0]) {
+        return -1;
+      } else if (a.eventDt[0] > b.eventDt[0]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  };
 
   export default {
     name: "AfishaScene",
@@ -49,7 +50,7 @@ const orderCards = cards => {
         date: '',
         lang: {
           days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-          months: ['Jan', 'Feb' , 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           pickers: ['next 7 days', 'next 30 days', 'previous 7 days', 'previous 30 days'],
           placeholder: {
             date: 'Select Date',
@@ -61,7 +62,7 @@ const orderCards = cards => {
     },
     computed: {
       cards() {
-        let r = [... this.$store.state.afisha.fetchResult];
+        let r = [...this.$store.state.afisha.fetchResult];
         return orderCards(r);
       },
       existsLoading() {
