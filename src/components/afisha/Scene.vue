@@ -1,14 +1,21 @@
 <template>
   <div>
-    <Datepicker
-      v-if="!existsLoading"
-      :lang="lang"
-      v-model="date"
-      :disabled-days="isDisabledDay"
-      format="DD.MM.YYYY"
-      @change="closeAll"
-      @calendar-change="calendarChanged"
-    />
+    <div class="columns">
+      <div class="column is-four-fifths">
+        <h1 class="title is-3">{{ date ? 'Афиша на ' + day : 'Афиша за текущий месяц' }}</h1>
+      </div>
+      <div class="column">
+        <Datepicker
+          v-if="!existsLoading"
+          :lang="lang"
+          v-model="date"
+          :disabled-days="isDisabledDay"
+          format="DD.MM.YYYY"
+          @change="closeAll"
+          @calendar-change="calendarChanged"
+        />
+      </div>
+    </div>
     <div class="events list">
       <Card
         v-for="(v, i) in cards"
@@ -70,6 +77,18 @@
       },
       existsSet() {
         return this.$store.state.afisha.fetchExistsResult;
+      },
+      curMoment() {
+        if (!this.$route.params.dt) {
+          return false;
+        }
+        return moment(this.$route.params.dt, 'DD.MM');
+      },
+      day() {
+        if (!this.date) {
+          return null;
+        }
+        return this.curMoment.format("D.MM");
       }
     },
     methods: {
@@ -118,9 +137,8 @@
       }
     },
     created() {
-      if (this.$route.params.dt) {
-        const curDate = moment(this.$route.params.dt, 'DD.MM');
-        this.date = curDate.toDate();
+      if (this.curMoment) {
+        this.date = this.curMoment.toDate();
       }
       this.curMonth = moment().format("M");
       this.fetch();
