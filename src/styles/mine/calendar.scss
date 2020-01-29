@@ -1,0 +1,16 @@
+.mx-datepicker {
+  .cell {
+    background: cornflowerblue;
+    text-align: center;
+    border-radius: 20px;
+    color: #000;
+
+    &.today {
+      color: #000;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    border: 1px solid #fff;
+  }
+}
