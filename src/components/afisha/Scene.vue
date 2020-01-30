@@ -2,7 +2,7 @@
   <div>
     <div class="columns">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">{{ date ? 'Афиша на ' + day : 'Афиша за все время' }}</h2>
+        <h2 class="title is-3">{{ curMoment ? 'Афиша на ' + day : 'Афиша за все время' }}</h2>
       </div>
       <div class="column">
         <Datepicker
@@ -85,7 +85,7 @@
         return moment(this.$route.params.dt, 'DD.MM');
       },
       day() {
-        if (!this.date) {
+        if (!this.curMoment) {
           return null;
         }
         return this.curMoment.format("D.MM");
@@ -133,6 +133,7 @@
         }
       },
       $route() {
+        console.log("asd");
         this.fetch();
       }
     },
