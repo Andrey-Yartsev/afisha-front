@@ -16,7 +16,11 @@
         />
       </div>
     </div>
-    <div class="events list">
+    <div class="spinner" v-if="loading">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+    <div class="events list" v-else>
       <Card
         v-for="(v, i) in cards"
         :card="v"
@@ -89,6 +93,9 @@
           return null;
         }
         return this.curMoment.format("D.MM");
+      },
+      loading() {
+        return this.$store.state.afisha.fetchLoading;
       }
     },
     methods: {
@@ -133,7 +140,6 @@
         }
       },
       $route() {
-        console.log("asd");
         this.fetch();
       }
     },
