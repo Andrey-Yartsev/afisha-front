@@ -25,6 +25,7 @@
 
   const stripHtml = html => {
     const tmp = document.createElement("DIV");
+    html = html.replace(/<br\s?\/?>/g, ' ');
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
   };

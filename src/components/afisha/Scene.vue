@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="columns">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">{{ curMoment ? 'Афиша на ' + day : 'Афиша за все время' }}</h2>
-      </div>
       <div class="column">
+        <h2 class="title is-3">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
+      </div>
+      <div class="column calend">
         <Datepicker
           v-if="!existsLoading"
           :lang="lang"
@@ -103,7 +103,7 @@
         if (this.$route.params.dt) {
           this.$store.dispatch("afisha/fetch", this.$route.params.dt);
         } else {
-          this.$store.dispatch("afisha/fetch");
+          this.$store.dispatch("afisha/fetch", moment().format("DD.MM"));
         }
         this.$store.dispatch("afisha/fetchExists", this.curMonth);
       },
