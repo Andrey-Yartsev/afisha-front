@@ -25,6 +25,19 @@ createRequestAction({
 });
 
 createRequestAction({
+  prefix: "fetchLastUpdated",
+  requestType: "no-token",
+  apiPath: "events/last-updated",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "GET"
+  },
+  defaultResultValue: []
+});
+
+createRequestAction({
   prefix: "fetchExists",
   requestType: "no-token",
   apiPath: "events/exists/{month}",

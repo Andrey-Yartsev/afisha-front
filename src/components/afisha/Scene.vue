@@ -2,7 +2,7 @@
   <div>
     <div class="columns">
       <div class="column">
-        <h2 class="title is-3">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
+        <h2 class="title is-3" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
       <div class="column calend">
         <Datepicker
@@ -20,15 +20,29 @@
       <div class="double-bounce1"></div>
       <div class="double-bounce2"></div>
     </div>
-    <div class="events list" v-else>
-      <Card
-        v-for="(v, i) in cards"
-        :card="v"
-        :key="i"
-        :ref="'card' + i"
-        @toggle="opened => closeExcepting(opened, i)"
-        :showDay="!date"
-      />
+    <div class="columns" v-else>
+      <div class="column events">
+        <h3 class="title is-4" v-if="isHome">Афиша на сегодня</h3>
+        <Card
+          v-for="(v, i) in cards"
+          :card="v"
+          :key="i"
+          :ref="'card' + i"
+          @toggle="opened => closeExcepting(opened, i)"
+          :showDay="!date"
+        />
+      </div>
+      <div class="column events" v-if="isHome">
+        <h3 class="title is-4">Последние изменения</h3>
+        <Card
+          v-for="(v, i) in lastUpdated"
+          :card="v"
+          :key="i"
+          :ref="'card' + i"
+          @toggle="opened => closeExcepting(opened, i)"
+          :showDay="true"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +90,9 @@
         let r = [...this.$store.state.afisha.fetchResult];
         return orderCards(r);
       },
+      lastUpdated() {
+        return this.$store.state.afisha.fetchLastUpdatedResult;
+      },
       existsLoading() {
         return this.$store.state.afisha.fetchExistsLoading;
       },
@@ -95,7 +112,18 @@
         return this.curMoment.format("D.MM");
       },
       loading() {
+        if (!this.$route.params.dt) {
+          if (this.loadingLastUpdated) {
+            return true;
+          }
+        }
         return this.$store.state.afisha.fetchLoading;
+      },
+      loadingLastUpdated() {
+        return this.$store.state.afisha.fetchLastUpdatedLoading;
+      },
+      isHome() {
+        return !this.$route.params.dt;
       }
     },
     methods: {
@@ -106,6 +134,9 @@
           this.$store.dispatch("afisha/fetch", moment().format("DD.MM"));
         }
         this.$store.dispatch("afisha/fetchExists", this.curMonth);
+      },
+      fetchLastUpdated() {
+        this.$store.dispatch("afisha/fetchLastUpdated");
       },
       isDisabledDay(date) {
         const day = moment(date).format("DD.MM");
@@ -146,6 +177,9 @@
     created() {
       if (this.curMoment) {
         this.date = this.curMoment.toDate();
+      }
+      if (!this.$route.params.dt) {
+        this.fetchLastUpdated();
       }
       this.curMonth = moment().format("M");
       this.fetch();
