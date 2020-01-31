@@ -41,6 +41,7 @@
           :ref="'card' + i"
           @toggle="opened => closeExcepting(opened, i)"
           :showDay="true"
+          :showUpdated="true"
         />
       </div>
     </div>

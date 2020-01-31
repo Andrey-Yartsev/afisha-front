@@ -11,7 +11,10 @@
     -->
     <div class="content" :class="{ opened }">
       <div class="header">
-        <span class="date">{{ day }}{{ time || 'см. содержание' }}</span>
+        <span class="date">
+          {{ day }}{{ time || 'см. содержание' }}
+          <span class="updated" v-if="showUpdated">{{ updated }}</span>
+        </span>
         <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
       </div>
       <span v-html="text"></span>
@@ -35,6 +38,10 @@
     props: {
       card: Object,
       showDay: {
+        type: Boolean,
+        default: false
+      },
+      showUpdated: {
         type: Boolean,
         default: false
       }
@@ -73,6 +80,9 @@
           return null;
         }
         return this.moment.format("D.MM") + " — ";
+      },
+      updated() {
+        return moment(this.card.dtUpdate).format("D.MM HH:mm");
       }
     },
     methods: {
