@@ -17,8 +17,15 @@
         </span>
         <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
       </div>
-      <span v-html="text"></span>
-      <span ref="text" style="display: none" v-html="card.text"></span>
+      <div class="body">
+        <div class="image" v-if="card.images.length">
+          <a :href="card.images[0]" target="_blank"><img :src="card.images[0]" /></a>
+        </div>
+        <div>
+          <span v-html="text"></span>
+          <span ref="text" style="display: none" v-html="card.text"></span>
+        </div>
+      </div>
     </div>
   </div>
 </template>

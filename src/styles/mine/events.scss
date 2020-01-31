@@ -23,11 +23,37 @@
       &.opened {
         background: #fff;
         box-shadow: 0 0 20px 0 rgba(0,0,0,0.2);
+
+        .body {
+          display: block;
+          .image {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            max-width: 400px;
+          }
+        }
       }
 
       .updated {
-        display: inline-block;
+        display: inline;
         margin-left: 15px;
+      }
+
+      .body {
+        display: inline-flex;
+
+        .image {
+          flex-grow: 0;
+          flex-shrink: 0;
+          flex-basis: 80px;
+          margin-top: 5px;
+          margin-right: 13px;
+        }
+
+        img {
+          display: inline-block;
+          border-radius: 10px;
+        }
       }
     }
 
