@@ -1,13 +1,22 @@
 .logo {
   font-size: 30px;
   padding: 2rem 2rem 0 2rem;
-
-  @media screen and (max-width: $desktop) {
-    padding: 1rem 1rem 0 1rem;
-  }
+  background: url(/img/logo.png) no-repeat 0 15px;
+  padding-left: 150px;
+  padding-bottom: 50px;
 
   img {
     width: 100px;
+  }
+
+  .title {
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .date-container {
+    margin-top: -130px;
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="columns">
+    <div class="columns date-container">
       <div class="column">
         <h2 class="title is-3" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
