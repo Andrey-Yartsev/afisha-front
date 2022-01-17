@@ -15,7 +15,13 @@
           {{ day }}{{ time || 'см. содержание' }}
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
         </span>
-        <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
+
+        <div class="controls">
+          <span class="hiddenFileInput">
+            <input ref="file" type="file" name="theFile" @change="handleFileUpload" />
+          </span>
+          <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
+        </div>
       </div>
       <div class="body">
         <div class="image" v-if="card.images.length">
@@ -32,6 +38,7 @@
 
 <script>
   import moment from "moment";
+  import request from "@/utils/request";
 
   const stripHtml = html => {
     const tmp = document.createElement("DIV");
@@ -99,9 +106,19 @@
       },
       close () {
         this.opened = false;
+      },
+      async handleFileUpload(e) {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        await request('events/images/' + this.card._id, {
+          method: "POST",
+          body: formData
+        });
+        this.$refs.file.value = "";
       }
     },
-    mounted () {
+    mounted() {
       this.$nextTick(() => {
         if (!this.$refs.text) {
           return;

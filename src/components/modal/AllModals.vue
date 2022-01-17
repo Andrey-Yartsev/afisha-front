@@ -14,7 +14,7 @@
     },
     computed: {
       error() {
-        this.$store.state.request.error
+        return this.$store.state.request.error;
       }
     }
   }
