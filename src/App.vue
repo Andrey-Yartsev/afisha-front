@@ -4,11 +4,10 @@
 
     <nav id="navbar">
       <div class="container">
-        <div class="logo">
-          <router-link to="/">
-            <h2 class="title is-1">nnhub.ru</h2>
-          </router-link>
-        </div>
+        <router-link to="/" class="header-link">
+          <span class="logo"></span>
+          <span class="title is-1">nnhub.ru</span>
+        </router-link>
       </div>
     </nav>
 
