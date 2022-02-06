@@ -1,4 +1,6 @@
-.mx-datepicker {
+@import '~vue2-datepicker/scss/index.scss';
+
+.mx-datepicker-content {
   .cell {
     background: cornflowerblue;
     text-align: center;
