@@ -15,7 +15,7 @@
           {{ day }}{{ time || 'см. содержание' }}
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
         </span>
-
+        {{ card._id }}
         <div class="controls">
           <span class="hiddenFileInput">
             <input ref="file" type="file" name="theFile" @change="handleFileUpload" />
@@ -30,6 +30,9 @@
         <div>
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
+        </div>
+        <div class="userImages">
+          <img :src="imagePath(v)" v-for="v in card.userImagePaths" :key="v._id" />
         </div>
       </div>
     </div>
@@ -111,11 +114,14 @@
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-        await request('events/images/' + this.card._id, {
+        await request('events/images/' + this.card._id + '?access_token=otherpass', {
           method: "POST",
           body: formData
         });
         this.$refs.file.value = "";
+      },
+      imagePath(path) {
+        return 'http://localhost:8001/api' + path;
       }
     },
     mounted() {
