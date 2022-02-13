@@ -15,7 +15,6 @@
           {{ day }}{{ time || 'см. содержание' }}
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
         </span>
-        {{ card._id }}
         <div class="controls">
           <span class="hiddenFileInput">
             <input ref="file" type="file" name="theFile" @change="handleFileUpload" />
