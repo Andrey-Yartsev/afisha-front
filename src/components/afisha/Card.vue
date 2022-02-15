@@ -16,7 +16,7 @@
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
         </span>
         <div class="controls">
-          <span class="hiddenFileInput">
+          <span class="hiddenFileInput" v-if="isAdmin">
             <input ref="file" type="file" name="theFile" @change="handleFileUpload" />
           </span>
           <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
@@ -99,6 +99,9 @@
       },
       updated() {
         return moment(this.card.dtUpdate).format("D.MM HH:mm");
+      },
+      isAdmin() {
+        return this.$store.state.auth.authorized;
       }
     },
     methods: {

@@ -4,9 +4,7 @@ import { createRequestAction } from "@/store/utils/storeRequest";
 
 const state = {};
 const actions = {};
-
-const mutations = {
-};
+const mutations = {};
 
 createRequestAction({
   prefix: "fetch",

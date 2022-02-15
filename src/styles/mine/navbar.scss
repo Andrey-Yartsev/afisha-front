@@ -1,33 +1,38 @@
 #navbar {
   background: $black-ter;
   color: $white;
-
   padding: 1rem 0;
-
   @media screen and (max-width: $desktop) {
     padding-left: 1rem;
   }
-
-}
-
-.header-link {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  padding: 1.5px 0;
-
-  .logo {
-    width: 50px;
-    height: 50px;
-    background: url(/img/logo2.png) no-repeat;
-    background-size: contain;
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1rem;
+    .login {
+      color: $grey-light;
+    }
   }
+  .header-link {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 1.5px 0;
 
-  .title {
-    white-space: nowrap;
-    color: $white;
-    font-size: 30px;
-    font-weight: normal;
-    margin-left: 15px;
+    .logo {
+      width: 50px;
+      height: 50px;
+      background: url(/img/logo2.png) no-repeat;
+      background-size: contain;
+    }
+
+    .title {
+      white-space: nowrap;
+      color: $white;
+      font-size: 30px;
+      font-weight: normal;
+      margin-left: 15px;
+    }
   }
 }
