@@ -27,7 +27,6 @@
           <a :href="card.images[0]" target="_blank"><img :src="card.images[0]" /></a>
         </div>
         <div>
-          <div><b>{{ card._id }}</b></div>
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
         </div>
