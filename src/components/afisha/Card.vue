@@ -27,11 +27,15 @@
           <a :href="card.images[0]" target="_blank"><img :src="card.images[0]" /></a>
         </div>
         <div>
+          <div><b>{{ card._id }}</b></div>
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
         </div>
         <div class="userImages">
-          <img :src="imagePath(v)" v-for="v in card.userImagePaths" :key="v._id" />
+          <div v-for="(path, i) in card.userImagePaths" :key="i" class="img">
+            <a href="#" class="delete" @click.prevent="deleteImage(card._id, card.userImages[i])">x</a>
+            <img :src="path" />
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +44,6 @@
 
 <script>
   import moment from "moment";
-  import request from "@/utils/request";
 
   const stripHtml = html => {
     const tmp = document.createElement("DIV");
@@ -114,16 +117,17 @@
       },
       async handleFileUpload(e) {
         const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        await request('events/images/' + this.card._id + '?access_token=otherpass', {
-          method: "POST",
-          body: formData
+        await this.$store.dispatch('afisha/addUserImage', {
+          id: this.card._id,
+          file
         });
         this.$refs.file.value = "";
       },
-      imagePath(path) {
-        return 'http://localhost:8001/api' + path;
+      deleteImage(eventId, imageId) {
+        this.$store.dispatch("afisha/deleteUserImage", {
+          eventId,
+          imageId
+        });
       }
     },
     mounted() {

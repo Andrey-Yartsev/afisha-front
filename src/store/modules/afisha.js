@@ -1,10 +1,44 @@
 "use strict";
 
 import { createRequestAction } from "@/store/utils/storeRequest";
+import BrowserStore from "store";
+//import request from "@/utils/request";
+const password = BrowserStore.get('password');
 
 const state = {};
-const actions = {};
-const mutations = {};
+const actions = {
+  async addUserImage({ dispatch }, {id, file}) {
+    console.log(id, file);
+    const formData = new FormData();
+    formData.append('file', file);
+    // todo fetch -> request
+    await fetch(process.env.VUE_APP_API_URL + '/events/images/' + id + '?access_token=' + password, {
+      method: "POST",
+      body: formData
+    });
+    return dispatch('fetchOne', id);
+  },
+  async deleteUserImage({ dispatch }, { eventId, imageId }) {
+    await dispatch("_deleteUserImage", imageId);
+    return await dispatch("fetchOne", eventId);
+  },
+  async fetchOne({ dispatch, commit }, id) {
+    const item = await dispatch("_fetchOne", id);
+    commit("replaceItem", item);
+    return item;
+  }
+};
+
+const mutations = {
+  replaceItem(state, item) {
+    state.fetchResult = state.fetchResult.map(v => {
+      if (v.id === item.id) {
+        return item;
+      }
+      return v;
+    });
+  }
+};
 
 createRequestAction({
   prefix: "fetch",
@@ -19,6 +53,22 @@ createRequestAction({
   defaultResultValue: [],
   paramsToPath: function(params, path) {
     return path + "/" + params;
+  }
+});
+
+createRequestAction({
+  prefix: "_fetchOne",
+  requestType: "no-token",
+  apiPath: "event/{id}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "GET"
+  },
+  defaultResultValue: [],
+  paramsToPath: function(params, path) {
+    return path.replace(/{id}/, params);
   }
 });
 
@@ -50,6 +100,23 @@ createRequestAction({
     return path.replace(/{month}/, params);
   }
 });
+
+createRequestAction({
+  prefix: "_deleteUserImage",
+  requestType: "no-token",
+  apiPath: "events/images/{id}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "DELETE"
+  },
+  paramsToPath: function(params, path) {
+    return path.replace(/{id}/, params) + "?access_token=" + password;
+  }
+});
+
+
 
 export default {
   namespaced: true,

@@ -6,7 +6,7 @@
         {{ error }}
       </div>
     </div>
-    <button class="modal-close is-large" aria-label="close"></button>
+    <button class="modal-close is-large" aria-label="close" @click.prevent="close"></button>
   </div>
 </template>
 
@@ -16,6 +16,11 @@
     computed: {
       error() {
         return this.$store.state.request.error;
+      }
+    },
+    methods: {
+      close() {
+        this.$store.dispatch("request/setError", null);
       }
     }
   }
