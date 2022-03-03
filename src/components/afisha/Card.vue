@@ -30,7 +30,7 @@
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
         </div>
-        <div class="userImages">
+        <div class="userImages" v-if="isAdmin">
           <div v-for="(path, i) in card.userImagePaths" :key="i" class="img">
             <a href="#" class="delete" @click.prevent="deleteImage(card._id, card.userImages[i])">x</a>
             <img :src="path" />
