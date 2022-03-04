@@ -41,6 +41,12 @@ const mutations = {
       }
       return v;
     });
+    state.fetchLastUpdatedResult = state.fetchLastUpdatedResult.map(v => {
+      if (v.id === item.id) {
+        return item;
+      }
+      return v;
+    });
   },
   setUserImageLoadingId(state, eventId) {
     state.userImageLoadingId = eventId;
