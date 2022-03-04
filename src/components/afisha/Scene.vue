@@ -75,11 +75,14 @@
       return {
         date: '',
         lang: {
-          days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-          months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          formatLocale: {
+            firstDayOfWeek: 1,
+          },
+          days: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+          months: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
           pickers: ['next 7 days', 'next 30 days', 'previous 7 days', 'previous 30 days'],
           placeholder: {
-            date: 'Select Date',
+            date: 'Выбрать дату',
             dateRange: 'Select Date Range'
           }
         },
@@ -164,6 +167,10 @@
     },
     watch: {
       date(dt) {
+        if (!dt) {
+          this.$router.push("/");
+          return;
+        }
         const mo = moment(dt);
         const _dt = mo.format('DD.MM');
         this.curMonth = mo.format('M');
