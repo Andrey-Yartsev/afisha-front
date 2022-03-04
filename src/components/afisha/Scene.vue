@@ -23,14 +23,17 @@
     <div class="columns" v-else>
       <div class="column events">
         <h3 class="title is-4" v-if="isHome">Афиша на сегодня</h3>
-        <Card
-          v-for="(v, i) in cards"
-          :card="v"
-          :key="i"
-          :ref="'card' + i"
-          @toggle="opened => closeExcepting(opened, i)"
-          :showDay="!date"
-        />
+        <div v-if="cards.length === 0" class="no-items">Нет событий</div>
+        <template v-else>
+          <Card
+              v-for="(v, i) in cards"
+              :card="v"
+              :key="i"
+              :ref="'card' + i"
+              @toggle="opened => closeExcepting(opened, i)"
+              :showDay="!date"
+          />
+        </template>
       </div>
       <div class="column events" v-if="isHome">
         <h3 class="title is-4">Последние изменения</h3>
