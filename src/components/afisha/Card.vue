@@ -112,7 +112,8 @@ export default {
       return this.$store.state.auth.authorized;
     },
     userImageLoading() {
-      return this.$store.state.afisha.userImageLoading;
+      const eventId = this.$store.state.afisha.userImageLoadingId;
+      return eventId && eventId === this.card._id;
     }
   },
   methods: {

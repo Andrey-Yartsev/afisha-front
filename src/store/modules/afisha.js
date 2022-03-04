@@ -6,11 +6,11 @@ import BrowserStore from "store";
 const password = BrowserStore.get('password');
 
 const state = {
-  userImageLoading: false
+  userImageLoadingId: null
 };
 const actions = {
   async addUserImage({ dispatch, commit }, {id, file}) {
-    commit("setUserImageLoading", true);
+    commit("setUserImageLoadingId", id);
     const formData = new FormData();
     formData.append('file', file);
     // todo fetch -> request
@@ -19,7 +19,7 @@ const actions = {
       body: formData
     });
     const r = await dispatch('fetchOne', id);
-    commit("setUserImageLoading", false);
+    commit("setUserImageLoadingId", null);
     return r;
   },
   async deleteUserImage({ dispatch }, { eventId, imageId }) {
@@ -42,8 +42,8 @@ const mutations = {
       return v;
     });
   },
-  setUserImageLoading(state, flag) {
-    state.userImageLoading = flag;
+  setUserImageLoadingId(state, eventId) {
+    state.userImageLoadingId = eventId;
   }
 };
 
