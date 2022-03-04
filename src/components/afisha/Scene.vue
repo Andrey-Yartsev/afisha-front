@@ -12,7 +12,6 @@
           :disabled-days="isDisabledDay"
           format="DD.MM.YYYY"
           @change="closeAll"
-          @calendar-change="calendarChanged"
         />
       </div>
     </div>
@@ -148,9 +147,6 @@
       isDisabledDay(date) {
         const day = moment(date).format("DD.MM");
         return !(this.existsSet.indexOf(day) !== -1);
-      },
-      calendarChanged(date) {
-        console.log("CAL", date);
       },
       closeExcepting(opened, i) {
         if (!opened) {

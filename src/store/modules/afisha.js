@@ -8,7 +8,6 @@ const password = BrowserStore.get('password');
 const state = {};
 const actions = {
   async addUserImage({ dispatch }, {id, file}) {
-    console.log(id, file);
     const formData = new FormData();
     formData.append('file', file);
     // todo fetch -> request

@@ -143,7 +143,6 @@ const buildMutations = (prefix, mutations, resultKey) => {
     if (resultKey) {
       state[resultKey] = value;
     } else {
-      console.log(prefix + "Result", null);
       state[prefix + "Result"] = null;
     }
   };

@@ -10,7 +10,6 @@ const state = {
 const actions = {
   init({ dispatch, commit }) {
     const password = BrowserStore.get('password');
-    console.log('password', password);
     if (password) {
       dispatch("_login", { password }).then(r => {
         if (r.error) {
