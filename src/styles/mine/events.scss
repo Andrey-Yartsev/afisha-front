@@ -19,7 +19,8 @@
 
         .controls {
           display: flex;
-          align-items: baseline;
+          align-items: end;
+          height: 25px;
 
           .toggle {
             padding-right: 10px;

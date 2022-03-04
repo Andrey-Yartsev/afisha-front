@@ -5,9 +5,12 @@ import BrowserStore from "store";
 //import request from "@/utils/request";
 const password = BrowserStore.get('password');
 
-const state = {};
+const state = {
+  userImageLoading: false
+};
 const actions = {
-  async addUserImage({ dispatch }, {id, file}) {
+  async addUserImage({ dispatch, commit }, {id, file}) {
+    commit("setUserImageLoading", true);
     const formData = new FormData();
     formData.append('file', file);
     // todo fetch -> request
@@ -15,7 +18,9 @@ const actions = {
       method: "POST",
       body: formData
     });
-    return dispatch('fetchOne', id);
+    const r = await dispatch('fetchOne', id);
+    commit("setUserImageLoading", false);
+    return r;
   },
   async deleteUserImage({ dispatch }, { eventId, imageId }) {
     await dispatch("_deleteUserImage", imageId);
@@ -36,6 +41,9 @@ const mutations = {
       }
       return v;
     });
+  },
+  setUserImageLoading(state, flag) {
+    state.userImageLoading = flag;
   }
 };
 
