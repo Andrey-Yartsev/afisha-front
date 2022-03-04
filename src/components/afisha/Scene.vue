@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="columns date-container">
-      <div class="column">
-        <h2 class="title is-4" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
+      <div class="column col-title">
+        <h2 class="title is-5" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
       <div class="column calend">
         <Datepicker

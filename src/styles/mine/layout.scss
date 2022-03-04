@@ -1,5 +1,6 @@
 .date-container {
-  display: flex !important;
+  display: flex;
+  align-items: center;
 }
 
 .bd {
@@ -8,4 +9,8 @@
   @media screen and (max-width: $desktop) {
     padding: 1rem;
   }
+}
+
+.col-title {
+  flex-grow: 4;
 }
