@@ -17,6 +17,13 @@
         </span>
         <div class="controls">
           <template v-if="isAdmin">
+
+
+
+            <span class="icon" @click="edit" v-if="editable">
+              <i class="fas fa-edit"></i>
+            </span>
+
             <div class="spinner-small-inline" v-if="userImageLoading">
               <div class="double-bounce1"></div>
               <div class="double-bounce2"></div>
@@ -25,6 +32,8 @@
               <input ref="file" type="file" name="theFile" @change="handleFileUpload"/>
             </span>
           </template>
+
+
           <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
         </div>
       </div>
@@ -66,6 +75,10 @@ export default {
       default: false
     },
     showUpdated: {
+      type: Boolean,
+      default: false
+    },
+    editable: {
       type: Boolean,
       default: false
     }
@@ -136,6 +149,15 @@ export default {
       this.$store.dispatch("afisha/deleteUserImage", {
         eventId,
         imageId
+      });
+    },
+    edit() {
+      console.log("ssss");
+      this.$store.dispatch("modal/show", {
+        name: "editEvent",
+        data: {
+          id: this.card._id
+        }
       });
     }
   },

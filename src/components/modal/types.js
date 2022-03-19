@@ -1,6 +1,9 @@
 const modalTypes = [
   {
     storeName: "login"
+  },
+  {
+    storeName: "editEvent"
   }
 ];
 

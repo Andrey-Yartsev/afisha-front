@@ -31,20 +31,24 @@
               :ref="'card' + i"
               @toggle="opened => closeExcepting(opened, i)"
               :showDay="!date"
+              :editable="true"
           />
         </template>
       </div>
       <div class="column events" v-if="isHome">
         <h3 class="title is-4">Последние изменения</h3>
-        <Card
-          v-for="(v, i) in lastUpdated"
-          :card="v"
-          :key="i"
-          :ref="'card' + i"
-          @toggle="opened => closeExcepting(opened, i)"
-          :showDay="true"
-          :showUpdated="true"
-        />
+        <div v-if="lastUpdated.length === 0" class="no-items">Ничего нет</div>
+        <template v-else>
+          <Card
+            v-for="(v, i) in lastUpdated"
+            :card="v"
+            :key="i"
+            :ref="'card' + i"
+            @toggle="opened => closeExcepting(opened, i)"
+            :showDay="true"
+            :showUpdated="true"
+          />
+        </template>
       </div>
     </div>
   </div>
