@@ -9,7 +9,7 @@
           v-if="!existsLoading"
           :lang="lang"
           v-model="date"
-          :disabled-days="isDisabledDay"
+          :disabled-date="isDisabledDate"
           format="DD.MM.YYYY"
           @change="closeAll"
         />
@@ -144,7 +144,7 @@
       fetchLastUpdated() {
         this.$store.dispatch("afisha/fetchLastUpdated");
       },
-      isDisabledDay(date) {
+      isDisabledDate(date) {
         const day = moment(date).format("DD.MM");
         return !(this.existsSet.indexOf(day) !== -1);
       },
