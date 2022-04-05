@@ -18,8 +18,6 @@
         <div class="controls">
           <template v-if="isAdmin">
 
-
-
             <span class="icon" @click="edit" v-if="editable">
               <i class="fas fa-edit"></i>
             </span>
@@ -32,7 +30,6 @@
               <input ref="file" type="file" name="theFile" @change="handleFileUpload"/>
             </span>
           </template>
-
 
           <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
         </div>
@@ -152,12 +149,9 @@ export default {
       });
     },
     edit() {
-      console.log("ssss");
       this.$store.dispatch("modal/show", {
         name: "editEvent",
-        data: {
-          id: this.card._id
-        }
+        data: this.card
       });
     }
   },

@@ -3,7 +3,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Редактировать событие</p>
+        <p class="modal-card-title">Новое событие</p>
         <button class="delete" aria-label="close" @click="close"></button>
       </header>
       <section class="modal-card-body">
@@ -17,8 +17,8 @@
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" @click="save" :disabled="saving">Сохранить</button>
-        <button class="button" @click="close" :disabled="saving">Отмена</button>
+        <button class="button is-success">Добавить</button>
+        <button class="button" @click="close">Отмена</button>
       </footer>
     </div>
   </div>
@@ -33,30 +33,14 @@ export default {
       error: ""
     };
   },
-  computed: {
-    id() {
-      return this.$store.state.modal.editEvent.data.id;
-    },
-    saving() {
-      return this.$store.state.afisha._updateEventLoading;
-    }
-  },
   methods: {
     close() {
       this.$store.dispatch("modal/hide", "editEvent");
-    },
-    async save() {
-      await this.$store.dispatch("afisha/updateEvent", {
-        id: this.id,
-        data: {
-          text: this.text
-        }
-      });
-      this.close();
     }
   },
   mounted() {
-    const item = this.$store.state.afisha.fetchResult.find(v => v.id === this.id);
+    const id = this.$store.state.modal.editEvent.data.id;
+    const item = this.$store.state.afisha.fetchResult.find(v => v.id === id);
     this.text = item.text;
   }
 }

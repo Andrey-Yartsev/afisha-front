@@ -1,20 +1,19 @@
 "use strict";
 
-import { createRequestAction } from "@/store/utils/storeRequest";
+import {createRequestAction} from "@/store/utils/storeRequest";
 import BrowserStore from "store";
-//import request from "@/utils/request";
+import tokenNoJsonRequest from "@/utils/tokenNoJsonRequest";
 const password = BrowserStore.get('password');
 
 const state = {
   userImageLoadingId: null
 };
 const actions = {
-  async addUserImage({ dispatch, commit }, {id, file}) {
+  async addUserImage({dispatch, commit}, {id, file}) {
     commit("setUserImageLoadingId", id);
     const formData = new FormData();
     formData.append('file', file);
-    // todo fetch -> request
-    await fetch(process.env.VUE_APP_API_URL + '/events/images/' + id + '?access_token=' + password, {
+    await tokenNoJsonRequest('events/images/' + id, {
       method: "POST",
       body: formData
     });
@@ -22,12 +21,17 @@ const actions = {
     commit("setUserImageLoadingId", null);
     return r;
   },
-  async deleteUserImage({ dispatch }, { eventId, imageId }) {
+  async deleteUserImage({dispatch}, {eventId, imageId}) {
     await dispatch("_deleteUserImage", imageId);
     return await dispatch("fetchOne", eventId);
   },
-  async fetchOne({ dispatch, commit }, id) {
+  async fetchOne({dispatch, commit}, id) {
     const item = await dispatch("_fetchOne", id);
+    commit("replaceItem", item);
+    return item;
+  },
+  async updateEvent({dispatch, commit}, id) {
+    const item = await dispatch("_updateEvent", id);
     commit("replaceItem", item);
     return item;
   }
@@ -64,7 +68,7 @@ createRequestAction({
     method: "GET"
   },
   defaultResultValue: [],
-  paramsToPath: function(params, path) {
+  paramsToPath: function (params, path) {
     return path + "/" + params;
   }
 });
@@ -80,8 +84,27 @@ createRequestAction({
     method: "GET"
   },
   defaultResultValue: [],
-  paramsToPath: function(params, path) {
+  paramsToPath: function (params, path) {
     return path.replace(/{id}/, params);
+  }
+});
+
+createRequestAction({
+  prefix: "_updateEvent",
+  requestType: "token",
+  apiPath: "admin/events/{id}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "POST"
+  },
+  paramsToPath: function (params, path) {
+    return path.replace(/{id}/, params.id);
+  },
+  paramsToOptions: function (params, options) {
+    options.data = params.data;
+    return options;
   }
 });
 
@@ -109,7 +132,7 @@ createRequestAction({
     method: "GET"
   },
   defaultResultValue: [],
-  paramsToPath: function(params, path) {
+  paramsToPath: function (params, path) {
     return path.replace(/{month}/, params);
   }
 });
@@ -124,11 +147,10 @@ createRequestAction({
   options: {
     method: "DELETE"
   },
-  paramsToPath: function(params, path) {
+  paramsToPath: function (params, path) {
     return path.replace(/{id}/, params) + "?access_token=" + password;
   }
 });
-
 
 
 export default {

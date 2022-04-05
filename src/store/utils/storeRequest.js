@@ -39,7 +39,6 @@ const storeRequest = (
       "no-token": request
     };
     const Request = requests[requestType];
-
     Request(apiPath, options)
       .then(async response => {
         if (response.status === 401) {
