@@ -6,5 +6,5 @@ export default async (apiPath, options) => {
     options.headers = {}
   }
   options.headers["Content-Type"] = "application/json" ;
-  return fetch(process.env.VUE_APP_API_URL + "/" + apiPath, options);
+  return await fetch(process.env.VUE_APP_API_URL + "/" + apiPath, options);
 };

@@ -2,6 +2,7 @@
   <div>
     <div class="columns date-container">
       <div class="column col-title">
+        <!--<button class="button" @click="addEvent">Добавить событие</button>-->
         <h2 class="title is-5" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
       <div class="column calend">
@@ -31,20 +32,24 @@
               :ref="'card' + i"
               @toggle="opened => closeExcepting(opened, i)"
               :showDay="!date"
+              :editable="true"
           />
         </template>
       </div>
       <div class="column events" v-if="isHome">
         <h3 class="title is-4">Последние изменения</h3>
-        <Card
-          v-for="(v, i) in lastUpdated"
-          :card="v"
-          :key="i"
-          :ref="'card' + i"
-          @toggle="opened => closeExcepting(opened, i)"
-          :showDay="true"
-          :showUpdated="true"
-        />
+        <div v-if="lastUpdated.length === 0" class="no-items">Ничего нет</div>
+        <template v-else>
+          <Card
+            v-for="(v, i) in lastUpdated"
+            :card="v"
+            :key="i"
+            :ref="'card' + i"
+            @toggle="opened => closeExcepting(opened, i)"
+            :showDay="true"
+            :showUpdated="true"
+          />
+        </template>
       </div>
     </div>
   </div>
@@ -161,6 +166,11 @@
       closeAll() {
         this.cards.forEach((v, n) => {
           this.$refs['card' + n][0].close();
+        });
+      },
+      addEvent() {
+        this.$store.dispatch("modal/show", {
+          name: "addEvent"
         });
       }
     },
