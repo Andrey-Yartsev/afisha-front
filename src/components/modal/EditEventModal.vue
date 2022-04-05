@@ -44,7 +44,7 @@ export default {
     quillOptions() {
       return {
         modules: {
-          toolbar: [['bold'], ['link'/*, 'image'*/]]
+          toolbar: [['bold'], [/*'link', 'image'*/]]
         }
       };
     }
