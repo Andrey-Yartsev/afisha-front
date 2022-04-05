@@ -1,7 +1,7 @@
 <template>
   <div class="modal is-active">
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div class="modal-card modal-event-edit">
       <header class="modal-card-head">
         <p class="modal-card-title">Редактировать событие</p>
         <button class="delete" aria-label="close" @click="close"></button>
@@ -9,9 +9,10 @@
       <section class="modal-card-body">
         <div class="field">
           <div class="control">
-            <textarea class="textarea" v-model="text"></textarea>
+            <input class="input">
           </div>
         </div>
+        <quill-editor v-model="text" :options="quillOptions"/>
         <div class="notification is-danger" v-if="error">
           {{ error }}
         </div>
@@ -39,6 +40,13 @@ export default {
     },
     saving() {
       return this.$store.state.afisha._updateEventLoading;
+    },
+    quillOptions() {
+      return {
+        modules: {
+          toolbar: [['bold'], ['link'/*, 'image'*/]]
+        }
+      };
     }
   },
   methods: {
