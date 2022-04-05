@@ -7,11 +7,11 @@
         <button class="delete" aria-label="close" @click="close"></button>
       </header>
       <section class="modal-card-body">
-        <div class="field">
-          <div class="control">
-            <input class="input">
-          </div>
-        </div>
+<!--        <div class="field">-->
+<!--          <div class="control">-->
+<!--            <input class="input">-->
+<!--          </div>-->
+<!--        </div>-->
         <quill-editor v-model="text" :options="quillOptions"/>
         <div class="notification is-danger" v-if="error">
           {{ error }}
