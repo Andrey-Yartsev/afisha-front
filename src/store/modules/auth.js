@@ -29,11 +29,9 @@ const actions = {
         return;
       }
     } else {
-      console.trace("XXXX")
       window.location.replace(window.location.origin);
     }
     BrowserStore.set("vk-token", token);
-    console.log("vk-token set ", token);
     const user = await dispatch("auth");
     commit("setUser", user);
   },
