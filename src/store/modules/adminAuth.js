@@ -40,7 +40,7 @@ const actions = {
 };
 const mutations = {
   setAuthorized(state, flag) {
-    state.adminAuthorized = flag;
+    state.authorized = flag;
   }
 };
 

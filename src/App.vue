@@ -21,7 +21,8 @@
     </div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>
+        <p>!!
+          {{$store.state.adminAuth}}
           <a href="#" class="login" v-if="isAdmin" @click="logout">admin logout</a>
           <a href="#" class="login" v-else @click.prevent="showLogin">admin login</a>
         </p>
