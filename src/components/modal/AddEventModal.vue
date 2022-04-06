@@ -1,7 +1,7 @@
 <template>
   <div class="modal is-active">
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div class="modal-card modal-event">
       <header class="modal-card-head">
         <p class="modal-card-title">Новое событие</p>
         <button class="delete" aria-label="close" @click="close"></button>
@@ -9,7 +9,7 @@
       <section class="modal-card-body">
         <div class="field">
           <div class="control">
-            <textarea class="textarea" v-model="text"></textarea>
+            <quill-editor v-model="text" :options="quillOptions"/>
           </div>
         </div>
         <div class="notification is-danger" v-if="error">
@@ -17,7 +17,7 @@
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success">Добавить</button>
+        <button class="button is-success" @click="create">Добавить</button>
         <button class="button" @click="close">Отмена</button>
       </footer>
     </div>
@@ -33,15 +33,27 @@ export default {
       error: ""
     };
   },
-  methods: {
-    close() {
-      this.$store.dispatch("modal/hide", "editEvent");
+  computed: {
+    quillOptions() {
+      return {
+        modules: {
+          toolbar: [['bold'], [/*'link', 'image'*/]]
+        }
+      };
     }
   },
-  mounted() {
-    const id = this.$store.state.modal.editEvent.data.id;
-    const item = this.$store.state.afisha.fetchResult.find(v => v.id === id);
-    this.text = item.text;
+  methods: {
+    close() {
+      this.$store.dispatch("modal/hide", "addEvent");
+    },
+    async create() {
+      await this.$store.dispatch("afisha/createEvent", {
+        data: {
+          text: this.text
+        }
+      });
+      this.close();
+    }
   }
 }
 </script>

@@ -119,7 +119,7 @@ export default {
       return moment(this.card.dtUpdate).format("D.MM HH:mm");
     },
     isAdmin() {
-      return this.$store.state.auth.authorized;
+      return this.$store.state.adminAuth.authorized;
     },
     userImageLoading() {
       const eventId = this.$store.state.afisha.userImageLoadingId;

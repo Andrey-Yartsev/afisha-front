@@ -1,58 +1,63 @@
 "use strict";
 
-import { createRequestAction } from "@/store/utils/storeRequest";
 import BrowserStore from "store";
+import {createRequestAction} from "@/store/utils/storeRequest";
+
+const findGetParameter = (parameterName) => {
+  let result = null,
+    tmp = [];
+  location.search
+    .substr(1)
+    .split("&")
+    .forEach(function (item) {
+      tmp = item.split("=");
+      if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    });
+  return result;
+}
 
 const state = {
-  authorized: false
+  user: null
 };
 
 const actions = {
-  init({ dispatch, commit }) {
-    const password = BrowserStore.get('password');
-    if (password) {
-      dispatch("_login", { password }).then(r => {
-        if (r.error) {
-          BrowserStore.remove('password');
-        } else {
-          commit("setAuthorized", true);
-        }
-      });
+  async init({ dispatch, commit }) {
+    let token = findGetParameter("vk-token");
+    if (!token) {
+      token = BrowserStore.get("vk-token", token);
+      if (!token) {
+        return;
+      }
+    } else {
+      console.trace("XXXX")
+      window.location.replace(window.location.origin);
     }
-  },
-  login({ dispatch, commit }, data) {
-    return new Promise((accept, reject) => {
-      dispatch("_login", data).then(r => {
-        if (r.error) {
-          reject(r.error);
-        } else {
-          BrowserStore.set("password", data.password);
-          commit("setAuthorized", true);
-          accept();
-        }
-      });
-    });
+    BrowserStore.set("vk-token", token);
+    console.log("vk-token set ", token);
+    const user = await dispatch("auth");
+    commit("setUser", user);
   },
   logout({ commit }) {
-    BrowserStore.remove("password");
-    commit("setAuthorized", false);
+    BrowserStore.remove("vk-token");
+    commit("setUser", null);
   }
 };
+
 const mutations = {
-  setAuthorized(state, flag) {
-    state.authorized = flag;
+  setUser(state, user) {
+    state.user = user;
   }
 };
 
 createRequestAction({
-  prefix: "_login",
-  requestType: "no-token",
-  apiPath: "admin/login",
+  prefix: "auth",
+  requestType: "user-token",
+  apiPath: "me",
   state,
   mutations,
   actions,
   options: {
-    method: "POST"
+    method: "GET"
   },
   paramsToOptions: function(params, options) {
     options.data = params;

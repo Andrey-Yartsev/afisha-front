@@ -39,7 +39,7 @@ export default {
       this.$store.dispatch("modal/hide", "login");
     },
     login() {
-      this.$store.dispatch("auth/login", { password: this.password }).then(() => {
+      this.$store.dispatch("adminAuth/login", { password: this.password }).then(() => {
         this.close();
       }).catch(error => {
         this.error = error;

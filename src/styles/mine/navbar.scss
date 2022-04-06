@@ -12,6 +12,10 @@
     padding-right: 1rem;
     .login {
       color: $grey-light;
+      span {
+        display: inline-block;
+        margin-right: 10px;
+      }
     }
   }
   .header-link {
@@ -34,5 +38,15 @@
       font-weight: normal;
       margin-left: 15px;
     }
+  }
+  a:hover {
+    color: #fff;
+  }
+}
+
+.footer {
+  margin-top: 100px;
+  a {
+    color: #ccc;
   }
 }

@@ -1,7 +1,9 @@
 import anyRequest from "@/utils/anyRequest";
 import tokenRequest from "../../utils/tokenRequest";
 import request from "../../utils/request";
-import Router from "@/router";
+import userTokenRequest from "../../utils/userTokenRequest";
+import BrowserStore from "store";
+// import Router from "@/router";
 
 const isOffline = () => {
   return global.navigator && global.navigator.onLine === false;
@@ -36,13 +38,15 @@ const storeRequest = (
     const requests = {
       any: anyRequest,
       token: tokenRequest,
-      "no-token": request
+      "no-token": request,
+      "user-token": userTokenRequest
     };
     const Request = requests[requestType];
     Request(apiPath, options)
       .then(async response => {
         if (response.status === 401) {
-          Router.push("/login");
+          BrowserStore.remove("vk-token");
+          // Router.push("/login");
           return;
         }
         if (response.status === 200) {

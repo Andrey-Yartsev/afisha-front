@@ -11,8 +11,8 @@ export default async (apiPath, options) => {
     ...options.query
   };
 
-  if (Store.state.auth.token) {
-    query["access-token"] = Store.state.auth.token;
+  if (Store.state.adminAuth.token) {
+    query["access-token"] = Store.state.adminAuth.token;
   }
 
   const params = queryString.stringify(query);

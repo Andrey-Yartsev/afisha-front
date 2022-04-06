@@ -30,6 +30,11 @@ const actions = {
     commit("replaceItem", item);
     return item;
   },
+  async createEvent({dispatch, commit}, id) {
+    const item = await dispatch("_createEvent", id);
+    commit("addItem", item);
+    return item;
+  },
   async updateEvent({dispatch, commit}, id) {
     const item = await dispatch("_updateEvent", id);
     commit("replaceItem", item);
@@ -51,6 +56,9 @@ const mutations = {
       }
       return v;
     });
+  },
+  addItem(state, item){
+    state.fetchResult.push(item);
   },
   setUserImageLoadingId(state, eventId) {
     state.userImageLoadingId = eventId;
@@ -101,6 +109,22 @@ createRequestAction({
   },
   paramsToPath: function (params, path) {
     return path.replace(/{id}/, params.id);
+  },
+  paramsToOptions: function (params, options) {
+    options.data = params.data;
+    return options;
+  }
+});
+
+createRequestAction({
+  prefix: "_createEvent",
+  requestType: "token",
+  apiPath: "admin/events",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "POST"
   },
   paramsToOptions: function (params, options) {
     options.data = params.data;

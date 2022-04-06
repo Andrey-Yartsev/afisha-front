@@ -2,7 +2,7 @@
   <div>
     <div class="columns date-container">
       <div class="column col-title">
-        <!--<button class="button" @click="addEvent">Добавить событие</button>-->
+        <button class="button" @click="addEvent" v-if="isAdmin">Добавить событие</button>
         <h2 class="title is-5" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
       <div class="column calend">
@@ -135,6 +135,9 @@
       },
       isHome() {
         return !this.$route.params.dt;
+      },
+      isAdmin() {
+        return this.$store.state.adminAuth.authorized;
       }
     },
     methods: {

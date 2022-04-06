@@ -1,7 +1,7 @@
 <template>
   <div class="modal is-active">
     <div class="modal-background"></div>
-    <div class="modal-card modal-event-edit">
+    <div class="modal-card modal-event">
       <header class="modal-card-head">
         <p class="modal-card-title">Редактировать событие</p>
         <button class="delete" aria-label="close" @click="close"></button>
