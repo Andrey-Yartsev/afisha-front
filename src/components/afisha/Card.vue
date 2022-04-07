@@ -22,13 +22,15 @@
               <i class="fas fa-edit"></i>
             </span>
 
-            <div class="spinner-small-inline" v-if="userImageLoading">
-              <div class="double-bounce1"></div>
-              <div class="double-bounce2"></div>
-            </div>
-            <span class="hiddenFileInput" v-else>
+            <template v-if="opened">
+              <div class="spinner-small-inline" v-if="userImageLoading">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+              </div>
+              <span class="hiddenFileInput" v-else>
               <input ref="file" type="file" name="theFile" @change="handleFileUpload"/>
             </span>
+            </template>
           </template>
 
           <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>
@@ -42,9 +44,10 @@
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
         </div>
-        <div class="userImages" v-if="isAdmin">
+        <div class="userImages" v-if="opened">
           <div v-for="(path, i) in card.userImagePaths" :key="i" class="img">
-            <a href="#" class="delete" @click.prevent="deleteImage(card._id, card.userImages[i])">x</a>
+            <a href="#" class="delete" v-if="isAdmin"
+               @click.prevent="deleteImage(card._id, card.userImages[i])">x</a>
             <img :src="path"/>
           </div>
         </div>
