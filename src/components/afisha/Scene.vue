@@ -2,9 +2,9 @@
   <div>
     <div class="columns date-container">
       <div class="column col-title">
-        <button class="button" @click="addEvent" v-if="isAdmin">Добавить событие</button>
         <h2 class="title is-5" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
+      <button class="button" @click="addEvent" v-if="isAdmin">Добавить событие</button>
       <div class="column calend">
         <Datepicker
           v-if="!existsLoading"
