@@ -24,7 +24,7 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <a href="#" class="login" v-if="isAdmin" @click="logout">admin logout</a>
+          <a href="#" class="login" v-if="isAdmin" @click.prevent="logout">admin logout</a>
           <a href="#" class="login" v-else @click.prevent="showLogin">admin login</a>
         </p>
       </div>
