@@ -116,4 +116,10 @@
 
 .modal-event {
   height: 100%;
+  .date-time {
+    .input {
+      width: 70px;
+      margin-right: 10px;
+    }
+  }
 }

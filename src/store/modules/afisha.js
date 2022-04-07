@@ -39,6 +39,10 @@ const actions = {
     const item = await dispatch("_updateEvent", id);
     commit("replaceItem", item);
     return item;
+  },
+  async removeEvent({dispatch, commit}, id) {
+    await dispatch("_removeEvent", id);
+    commit("removeItem", id);
   }
 };
 
@@ -57,7 +61,14 @@ const mutations = {
       return v;
     });
   },
-  addItem(state, item){
+  removeItem(state, id) {
+    state.fetchResult = state.fetchResult.filter(v => {
+      console.log(v.id, id);
+      return v.id !== id;
+    });
+  },
+  addItem(state, item) {
+    // console.log(item);
     state.fetchResult.push(item);
   },
   setUserImageLoadingId(state, eventId) {
@@ -117,6 +128,21 @@ createRequestAction({
 });
 
 createRequestAction({
+  prefix: "_removeEvent",
+  requestType: "token",
+  apiPath: "admin/events/{id}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "DELETE"
+  },
+  paramsToPath: function (id, path) {
+    return path.replace(/{id}/, id);
+  }
+});
+
+createRequestAction({
   prefix: "_createEvent",
   requestType: "token",
   apiPath: "admin/events",
@@ -127,6 +153,7 @@ createRequestAction({
     method: "POST"
   },
   paramsToOptions: function (params, options) {
+    console.log(params.data);
     options.data = params.data;
     return options;
   }

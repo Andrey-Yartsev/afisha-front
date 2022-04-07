@@ -8,6 +8,17 @@
       </header>
       <section class="modal-card-body">
         <div class="field">
+          <div class="control date-time">
+            <input class="input" v-model="date" v-mask="'99.99'" />
+            <input class="input" v-model="time" v-mask="'99:99'" />
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="input" v-model="image" />
+          </div>
+        </div>
+        <div class="field">
           <div class="control">
             <quill-editor v-model="text" :options="quillOptions"/>
           </div>
@@ -25,10 +36,15 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "EditEventModal",
   data() {
     return {
+      date: "",
+      time: "",
+      image: "",
       text: "",
       error: ""
     };
@@ -49,11 +65,18 @@ export default {
     async create() {
       await this.$store.dispatch("afisha/createEvent", {
         data: {
+          date: this.date,
+          time: this.time,
+          image: this.image,
           text: this.text
         }
       });
       this.close();
     }
+  },
+  mounted() {
+    this.date = moment().format('DD.MM');
+    this.time = '10:00';
   }
 }
 </script>

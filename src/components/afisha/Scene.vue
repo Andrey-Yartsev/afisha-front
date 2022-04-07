@@ -28,8 +28,8 @@
           <Card
               v-for="(v, i) in cards"
               :card="v"
-              :key="i"
-              :ref="'card' + i"
+              :key="v._id"
+              :ref="'card' + v._id"
               @toggle="opened => closeExcepting(opened, i)"
               :showDay="!date"
               :editable="true"
