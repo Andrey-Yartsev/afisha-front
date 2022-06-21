@@ -7,6 +7,15 @@
           <span class="logo"></span>
           <span class="title is-1">nnhub.ru</span>
         </router-link>
+
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <router-link class="navbar-item" to="/places">
+              Места
+            </router-link>
+          </div>
+        </div>
+
         <template v-if="vkLoginLoading">
           <span class="login" v-if="user">
             <span>{{ user.displayName }}</span>

@@ -203,6 +203,21 @@ createRequestAction({
   }
 });
 
+createRequestAction({
+  prefix: "searchEvents",
+  requestType: "no-token",
+  apiPath: "events/search/{word}",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "GET"
+  },
+  paramsToPath: function (params, path) {
+    return path.replace(/{word}/, params);
+  }
+});
+
 
 export default {
   namespaced: true,
