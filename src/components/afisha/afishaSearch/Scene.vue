@@ -6,9 +6,10 @@
     </div>
     <div class="columns">
       <div class="column events">
-        <h3 class="title is-4">Поиск</h3>
+        <h3 class="title is-4">Поиск {{ word }}</h3>
         <div v-if="cards.length === 0" class="no-items">Ничего нет</div>
         <template v-else>
+<!--          <Map :word="word" />-->
           <Card
               v-for="(v, i) in cards"
               :card="v"
@@ -16,7 +17,7 @@
               :ref="'card' + i"
               @toggle="opened => closeExcepting(opened, i)"
               :showDay="true"
-              :showUpdated="true"
+              :showUpdated="false"
           />
         </template>
       </div>
@@ -26,10 +27,12 @@
 
 <script>
 import Card from "../Card";
+import Map from "@/components/maps/MapLink";
 
 export default {
   name: "AfishaScene",
   components: {
+    Map,
     Card
   },
   computed: {
@@ -37,8 +40,11 @@ export default {
       return this.$store.state.afisha.searchEventsLoading;
     },
     cards() {
-      return [...this.$store.state.afisha.searchEventsResult];
+      return this.$store.state.afisha.searchEventsResult || [];
     },
+    word() {
+      return this.$route.params.word;
+    }
   },
   methods: {
     fetch() {
