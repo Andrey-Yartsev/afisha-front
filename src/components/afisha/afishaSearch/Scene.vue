@@ -5,8 +5,15 @@
       <div class="double-bounce2"></div>
     </div>
     <div class="columns">
-      <div class="column events">
+      <div class="column">
         <h3 class="title is-4">Поиск {{ word }}</h3>
+      </div>
+      <div class="column">
+        Найдено: {{ cards.length }}
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column events">
         <div v-if="cards.length === 0" class="no-items">Ничего нет</div>
         <template v-else>
 <!--          <Map :word="word" />-->
