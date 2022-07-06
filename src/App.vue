@@ -17,7 +17,8 @@
         </div>
 
         <template v-if="vkLoginLoading">
-          <span class="login" v-if="user">
+          <span class="login" v-if="userLoading">...</span>
+          <span class="login" v-else-if="user">
             <span>{{ user.displayName }}</span>
             <a href="#" @click.prevent="logout">logout</a>
           </span>
@@ -55,6 +56,9 @@ export default {
     },
     user() {
       return this.$store.state.auth.user;
+    },
+    userLoading() {
+      return this.$store.state.auth.loading;
     }
   },
   methods: {

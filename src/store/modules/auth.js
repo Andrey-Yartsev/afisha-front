@@ -17,7 +17,8 @@ const findGetParameter = (parameterName) => {
 }
 
 const state = {
-  user: null
+  user: null,
+  loading: false
 };
 
 const actions = {
@@ -32,8 +33,12 @@ const actions = {
       window.location.replace(window.location.origin);
     }
     BrowserStore.set("vk-token", token);
-    const user = await dispatch("auth");
-    commit("setUser", user);
+    commit("setLoading", true);
+    setTimeout(async () => {
+      const user = await dispatch("auth");
+      commit("setUser", user);
+      commit("setLoading", false);
+    }, 1000);
   },
   logout({ commit }) {
     BrowserStore.remove("vk-token");
@@ -44,6 +49,9 @@ const actions = {
 const mutations = {
   setUser(state, user) {
     state.user = user;
+  },
+  setLoading(state, flag) {
+    state.loading = flag;
   }
 };
 

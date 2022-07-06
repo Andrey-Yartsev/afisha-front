@@ -4,9 +4,9 @@ const token = BrowserStore.get("vk-token");
 
 export default async (apiPath, options) => {
   if (!token) {
-    return;
-    console.trace("XXX");
-    console.log("no token defined for " + apiPath);
+    //return;
+    //console.trace("/me");
+    throw new Error("no token ("+token+") defined for " + apiPath);
   }
   if (!options) {
     options = {};
@@ -18,6 +18,6 @@ export default async (apiPath, options) => {
   if (options.data) {
     options.body = JSON.stringify(options.data);
   }
-  console.log(options);
+  // console.log(options);
   return await fetch(process.env.VUE_APP_API_URL + "/" + apiPath, options);
 };
