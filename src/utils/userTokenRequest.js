@@ -4,7 +4,8 @@ const token = BrowserStore.get("vk-token");
 
 export default async (apiPath, options) => {
   if (!token) {
-    throw new Error("no token defined");
+    console.trace("XXX");
+    console.log("no token defined for " + apiPath);
   }
   if (!options) {
     options = {};
