@@ -38,7 +38,7 @@ const actions = {
       const user = await dispatch("auth");
       commit("setUser", user);
       commit("setLoading", false);
-    }, 3000);
+    }, 500);
   },
   logout({ commit }) {
     BrowserStore.remove("vk-token");
