@@ -14,6 +14,14 @@
         <span class="date">
           {{ day }}{{ time || 'см. содержание' }}
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
+          <div v-if="card.vkUser && card.vkUser.vkId">
+               Добавил
+            <a :href="'https://vk.com/' +
+               card.vkUser.vkId.username || 'id' + card.vkUser.vkId.vkId "
+            target="_blank">
+              {{ card.vkUser.vkId.displayName }}
+            </a>
+          </div>
         </span>
         <div class="controls">
           <template v-if="isAdmin">
@@ -44,7 +52,7 @@
           <span v-html="text"></span>
           <span ref="text" style="display: none" v-html="card.text"></span>
         </div>
-        <div class="userImages" v-if="opened">
+        <div class="userImages" v-if="opened && card.userImagePaths.length">
           <div v-for="(path, i) in card.userImagePaths" :key="i" class="img">
             <a href="#" class="delete" v-if="isAdmin"
                @click.prevent="deleteImage(card._id, card.userImages[i])">x</a>

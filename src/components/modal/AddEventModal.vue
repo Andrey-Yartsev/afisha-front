@@ -3,19 +3,20 @@
     <div class="modal-background"></div>
     <div class="modal-card modal-event">
       <header class="modal-card-head">
-        <p class="modal-card-title">Новое событие</p>
+        <p class="modal-card-title">Добавить событие</p>
         <button class="delete" aria-label="close" @click="close"></button>
       </header>
       <section class="modal-card-body">
         <div class="field">
           <div class="control date-time">
-            <input class="input" v-model="date" v-mask="'99.99'" />
-            <input class="input" v-model="time" v-mask="'99:99'" />
+            <input class="input" v-model="date" v-mask="'99.99'"/>
+            <input class="input" v-model="time" v-mask="'99:99'"/>
           </div>
         </div>
         <div class="field">
+          <label class="label">Ссылка на изображение</label>
           <div class="control">
-            <input class="input" v-model="image" />
+            <input class="input" v-model="image"/>
           </div>
         </div>
         <div class="field">
@@ -37,6 +38,23 @@
 
 <script>
 import moment from "moment";
+
+function checkIfImageExists(url, callback) {
+  const img = new Image();
+  img.src = url;
+
+  if (img.complete) {
+    callback(true);
+  } else {
+    img.onload = () => {
+      callback(true);
+    };
+
+    img.onerror = () => {
+      callback(false);
+    };
+  }
+}
 
 export default {
   name: "EditEventModal",
@@ -63,15 +81,32 @@ export default {
       this.$store.dispatch("modal/hide", "addEvent");
     },
     async create() {
-      await this.$store.dispatch("afisha/createEvent", {
-        data: {
-          date: this.date,
-          time: this.time,
-          image: this.image,
-          text: this.text
+      const create = async () => {
+        await this.$store.dispatch("afisha/createEvent", {
+          data: {
+            date: this.date,
+            time: this.time,
+            image: this.image,
+            text: this.text
+          }
+        });
+        this.$store.commit("afisha/refresh");
+        this.close();
+      }
+      if (!this.image) {
+        await create();
+        return;
+      }
+      checkIfImageExists(this.image, async exists => {
+        if (!exists) {
+          this.$store.dispatch("request/setError", {
+            message: "Изображение не существует или имеет ошибку"
+          });
+        } else {
+          await create();
         }
       });
-      this.close();
+
     }
   },
   mounted() {

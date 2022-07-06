@@ -6,7 +6,8 @@ import tokenNoJsonRequest from "@/utils/tokenNoJsonRequest";
 const password = BrowserStore.get('password');
 
 const state = {
-  userImageLoadingId: null
+  userImageLoadingId: null,
+  refresh: 0
 };
 const actions = {
   async addUserImage({dispatch, commit}, {id, file}) {
@@ -42,7 +43,8 @@ const actions = {
   },
   async removeEvent({dispatch, commit}, id) {
     await dispatch("_removeEvent", id);
-    commit("removeItem", id);
+    commit("refresh");
+    //commit("removeItem", id);
   }
 };
 
@@ -73,6 +75,10 @@ const mutations = {
   },
   setUserImageLoadingId(state, eventId) {
     state.userImageLoadingId = eventId;
+  },
+  refresh(state) {
+    state.refresh = Math.random(0, 1000);
+    console.log(state.refresh);
   }
 };
 
@@ -144,7 +150,7 @@ createRequestAction({
 
 createRequestAction({
   prefix: "_createEvent",
-  requestType: "token",
+  requestType: "user-token",
   apiPath: "admin/events",
   state,
   mutations,
@@ -153,7 +159,6 @@ createRequestAction({
     method: "POST"
   },
   paramsToOptions: function (params, options) {
-    console.log(params.data);
     options.data = params.data;
     return options;
   }

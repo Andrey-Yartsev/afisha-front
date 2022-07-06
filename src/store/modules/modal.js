@@ -24,6 +24,7 @@ const state = {
 
 const mutations = {
   show(state, { name, data }) {
+    console.log(name, data);
     state[name].show = true;
     if (data) {
       state[name].data = data;

@@ -4,7 +4,7 @@
       <div class="column col-title">
         <h2 class="title is-5" v-if="!isHome">{{ curMoment ? 'Афиша на ' + day : 'Афиша на сегодня' }}</h2>
       </div>
-      <button class="button" @click="addEvent" v-if="isAdmin">Добавить событие</button>
+      <button class="button" @click="addEvent">Добавить событие</button>
       <div class="column calend">
         <Datepicker
           v-if="!existsLoading"
@@ -59,6 +59,7 @@
   import Card from "./Card";
   import Datepicker from 'vue2-datepicker';
   import moment from 'moment';
+  import BrowserStore from 'store';
 
   const orderCards = cards => {
     return cards.sort((a, b) => {
@@ -138,6 +139,12 @@
       },
       isAdmin() {
         return this.$store.state.adminAuth.authorized;
+      },
+      user() {
+        return this.$store.state.auth.user;
+      },
+      refresh() {
+        return this.$store.state.afisha.refresh;
       }
     },
     methods: {
@@ -161,7 +168,7 @@
           return;
         }
         this.cards.forEach((v, n) => {
-          if (i !== n) {
+          if (i !== n && this.$refs['card' + n]) {
             this.$refs['card' + n][0].close();
           }
         });
@@ -172,9 +179,36 @@
         });
       },
       addEvent() {
+        if (!this.user) {
+          this.$store.commit("modal/show", {
+            name: "confirm",
+            data: {
+              message: "Войти через ВК",
+              onOk: () => {
+                BrowserStore.set('openAddBoxAfterLogin', true);
+                window.location = process.env.VUE_APP_API_URL + "/auth/vkontakte";
+              }
+            }
+          });
+        } else {
+          // BrowserStore.remove('openAddBoxAfterLogin');
+          this._addEvent();
+        }
+      },
+      _addEvent() {
         this.$store.dispatch("modal/show", {
           name: "addEvent"
         });
+      },
+      init() {
+        if (this.curMoment) {
+          this.date = this.curMoment.toDate();
+        }
+        if (!this.$route.params.dt) {
+          this.fetchLastUpdated();
+        }
+        this.curMonth = moment().format("M");
+        this.fetch();
       }
     },
     watch: {
@@ -192,17 +226,22 @@
       },
       $route() {
         this.fetch();
+      },
+      refresh() {
+        console.log('refresh');
+        this.init();
+      }
+    },
+    mounted() {
+      if (BrowserStore.get('openAddBoxAfterLogin')) {
+        setTimeout(() => {
+          BrowserStore.remove('openAddBoxAfterLogin');
+        }, 5000);
+        this._addEvent();
       }
     },
     created() {
-      if (this.curMoment) {
-        this.date = this.curMoment.toDate();
-      }
-      if (!this.$route.params.dt) {
-        this.fetchLastUpdated();
-      }
-      this.curMonth = moment().format("M");
-      this.fetch();
+      this.init();
     }
   }
 </script>

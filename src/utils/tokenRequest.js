@@ -10,6 +10,9 @@ export default async (apiPath, options) => {
     options.body = JSON.stringify(options.data);
   }
   options.headers = {"Content-Type":  "application/json"};
+  if (!password) {
+    console.log('No password in storage');
+  }
   return await fetch(process.env.VUE_APP_API_URL + '/' + apiPath
     + '?access_token=' + password, options);
 };

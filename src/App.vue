@@ -44,6 +44,7 @@
 
 <script>
 import AllModals from "@/components/modal/AllModals";
+import BrowserStore from "store";
 
 export default {
   name: 'app',

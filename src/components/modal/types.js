@@ -8,6 +8,9 @@ const modalTypes = [
   {
     storeName: "editEvent"
   },
+  {
+    storeName: "confirm"
+  },
 ];
 
 export default modalTypes;

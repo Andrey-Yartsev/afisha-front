@@ -1,12 +1,15 @@
 <template>
-  <div class="modal is-active">
+  <div class="modal is-active error-modal">
     <div class="modal-background"></div>
-    <div class="modal-content">
-      <div class="box">
-        {{ error }}
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Ошибка</p>
+        <button class="delete" aria-label="close" @click.prevent="close"></button>
+      </header>
+      <div class="modal-card-body">
+        {{ error.message || error }}
       </div>
     </div>
-    <button class="modal-close is-large" aria-label="close" @click.prevent="close"></button>
   </div>
 </template>
 
