@@ -1,3 +1,4 @@
+
 #navbar {
   background: $black-ter;
   color: $white;
@@ -39,21 +40,15 @@
       margin-left: 15px;
     }
   }
-  a:hover {
+  a {
     color: #fff;
   }
+  a:hover {
+    text-decoration: underline;
+  }
 
-  .navbar-menu {
-    margin-left: 50px;
-    .navbar-item {
-      color: #fff !important;
-      background: none !important;
-      &:hover {
-
-        background: none !important;
-        opacity: 0.5;
-      }
-    }
+  .navbar-menu2 a {
+    font-size: 20px;
   }
 }
 

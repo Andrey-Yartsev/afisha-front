@@ -1,6 +1,22 @@
 <template>
-  <div>
-    <h3 class="title is-4">{{ place.name }}</h3>
+  <div class="place">
+    <div class="columns" v-if="place">
+      <div class="column">
+        <h3 class="title is-4">{{ place.name }}</h3>
+        <div v-if="place.imagePath" class="place-image"><img :src="place.imagePath"></div>
+      </div>
+      <div class="column right">
+        <template>
+          <div class="spinner-small-inline" v-if="imageLoading">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+          <span class="hiddenFileInput" v-else>
+              <input ref="file" type="file" name="theFile" @change="handleFileUpload"/>
+            </span>
+        </template>
+      </div>
+    </div>
     <AfishaSearchBox v-if="place" :word="place.name" />
   </div>
 </template>
@@ -30,11 +46,19 @@ export default {
       return this.places.find(place => {
         return this.placeId === place.id;
       });
+    },
+    imageLoading() {
+      return this.$store.state.places.imageLoading;
     }
   },
   methods: {
-    getPlace() {
-
+    async handleFileUpload(e) {
+      const file = e.target.files[0];
+      await this.$store.dispatch('places/updateImage', {
+        id: this.placeId,
+        file
+      });
+      this.$refs.file.value = "";
     }
   },
   mounted() {
