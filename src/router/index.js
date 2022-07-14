@@ -5,6 +5,7 @@ import Afisha from "../components/afisha/Scene";
 import AfishaSearch from "../components/afisha/afishaSearch/Scene";
 import Contacts from "../components/contacts/Scene";
 import Places from "../components/places/Scene";
+import Place from "../components/place/Scene";
 
 Vue.use(Router);
 
@@ -27,6 +28,10 @@ const routes = [
   {
     path: "/places",
     component: Places
+  },
+  {
+    path: "/place/:id",
+    component: Place
   },
 ];
 

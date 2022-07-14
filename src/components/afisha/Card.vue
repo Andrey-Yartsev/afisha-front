@@ -39,6 +39,7 @@
               <input ref="file" type="file" name="theFile" @change="handleFileUpload"/>
             </span>
             </template>
+
           </template>
 
           <a class="toggle" href="" @click.prevent="toggle">{{ opened ? "скрыть" : "показать" }}</a>

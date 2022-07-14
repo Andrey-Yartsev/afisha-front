@@ -3,7 +3,7 @@
     <div class="column2" v-for="place in places" :key="place.name">
       <router-link
         class="link"
-        :to="'/afisha/search/' + place.name"
+        :to="'/place/' + place.id"
         >
       {{ place.name }}
       </router-link>
@@ -16,7 +16,6 @@
 
 <script>
 const axios = require('axios').default;
-
 
 export default {
   name: "PlacesScene",

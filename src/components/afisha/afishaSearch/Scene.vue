@@ -1,46 +1,19 @@
 <template>
   <div>
-    <div class="spinner" v-if="loading">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
+    <div class="column">
+      <h3 class="title is-4">Поиск {{ word }}</h3>
     </div>
-    <div class="columns">
-      <div class="column">
-        <h3 class="title is-4">Поиск {{ word }}</h3>
-      </div>
-      <div class="column">
-        Найдено: {{ cards.length }}
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column events">
-        <div v-if="cards.length === 0" class="no-items">Ничего нет</div>
-        <template v-else>
-<!--          <Map :word="word" />-->
-          <Card
-              v-for="(v, i) in cards"
-              :card="v"
-              :key="i"
-              :ref="'card' + i"
-              @toggle="opened => closeExcepting(opened, i)"
-              :showDay="true"
-              :showUpdated="false"
-          />
-        </template>
-      </div>
-    </div>
+    <SearchBox :word="word" />
   </div>
 </template>
 
 <script>
-import Card from "../Card";
-import Map from "@/components/maps/MapLink";
+import SearchBox from "./SearchBox";
 
 export default {
   name: "AfishaScene",
   components: {
-    Map,
-    Card
+    SearchBox
   },
   computed: {
     loading() {
