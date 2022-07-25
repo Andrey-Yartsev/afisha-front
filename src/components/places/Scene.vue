@@ -1,11 +1,12 @@
 <template>
-  <div class="tags">
+  <div class="tags places">
     <div class="column2" v-for="place in places" :key="place.name">
       <router-link
         class="link"
         :to="'/place/' + place.id"
         >
-      {{ place.name }}
+        <img v-if="place.imagePath" :src="place.imagePath"/>
+        <div>{{ place.name }}</div>
       </router-link>
 <!--      <span class="icon" @click="gotoMap(place.name)">-->
 <!--        <i class="fas fa-location-arrow" aria-hidden="true"></i>-->
