@@ -4,7 +4,7 @@
     position: relative;
     img {
       display: block;
-      max-width: 200px;
+      max-width: 500px;
       max-height: 200px;
     }
     .delete {
@@ -19,5 +19,8 @@
     img {
       max-height: 100px;
     }
+  }
+  .vk img {
+    width: 20px;
   }
 }

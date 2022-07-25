@@ -8,6 +8,9 @@
         <img v-if="place.imagePath" :src="place.imagePath"/>
         <div>{{ place.name }}</div>
       </router-link>
+      <a v-if="place.vk" class="vk"
+         target="_blank"
+         :href="'https://vk.com/' + place.vk"><img src="/img/vk-logo.png"></a>
 <!--      <span class="icon" @click="gotoMap(place.name)">-->
 <!--        <i class="fas fa-location-arrow" aria-hidden="true"></i>-->
 <!--      </span>-->
