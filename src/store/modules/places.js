@@ -8,7 +8,7 @@ const state = {
   imageLoading: false
 };
 const actions = {
-  async updateImage({commit}, {id, file}) {
+  async updateImage({commit, dispatch}, {id, file}) {
     commit("setImageLoading", true);
     const formData = new FormData();
     formData.append('file', file);
@@ -16,9 +16,12 @@ const actions = {
       method: "POST",
       body: formData
     });
-    //const r = await dispatch('fetchOne', id);
+    await dispatch('fetch');
     commit("setImageLoading", false);
-    //return r;
+  },
+  async deleteImage({ dispatch }, params) {
+    await dispatch("_deleteImage", params);
+    await dispatch("fetch");
   }
 };
 const mutations = {
@@ -40,6 +43,22 @@ createRequestAction({
   defaultResultValue: [],
   paramsToPath: function (params, path) {
     return path + "/" + params;
+  }
+});
+
+createRequestAction({
+  prefix: "_deleteImage",
+  requestType: "token",
+  apiPath: "places/images",
+  state,
+  mutations,
+  actions,
+  options: {
+    method: "DELETE"
+  },
+  defaultResultValue: [],
+  paramsToPath: function (params, path) {
+    return path + "/" + params.id;
   }
 });
 

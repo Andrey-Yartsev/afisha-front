@@ -3,10 +3,14 @@
     <div class="columns" v-if="place">
       <div class="column">
         <h3 class="title is-4">{{ place.name }}</h3>
-        <div v-if="place.imagePath" class="place-image"><img :src="place.imagePath"></div>
+        <div v-if="place.imagePath" class="place-image">
+          <img :src="place.imagePath">
+          <a href="#" class="delete" v-if="isAdmin"
+             @click.prevent="deleteImage()">x</a>
+        </div>
       </div>
       <div class="column right">
-        <template>
+        <template v-if="isAdmin">
           <div class="spinner-small-inline" v-if="imageLoading">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
@@ -49,6 +53,9 @@ export default {
     },
     imageLoading() {
       return this.$store.state.places.imageLoading;
+    },
+    isAdmin() {
+      return this.$store.state.adminAuth.authorized;
     }
   },
   methods: {
@@ -59,6 +66,11 @@ export default {
         file
       });
       this.$refs.file.value = "";
+    },
+    async deleteImage() {
+      await this.$store.dispatch('places/deleteImage', {
+        id: this.placeId
+      });
     }
   },
   mounted() {

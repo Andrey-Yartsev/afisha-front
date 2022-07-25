@@ -14,7 +14,7 @@
         <span class="date">
           {{ day }}{{ time || 'см. содержание' }}
           <span class="updated" v-if="showUpdated">{{ updated }}</span>
-          <div v-if="card.vkUser && card.vkUser.vkId">
+          <div v-if="false && card.vkUser && card.vkUser.vkId">
                Добавил
             <a :href="'https://vk.com/' +
                card.vkUser.vkId.username || 'id' + card.vkUser.vkId.vkId "
