@@ -16,11 +16,18 @@
 }
 .places {
   .link {
+    display: block;
+    width: 170px;
+    margin-right: 5px;
     img {
       max-height: 100px;
     }
   }
-  .vk img {
+  .vk {
+    display: block;
     width: 20px;
+    img {
+      width: 20px;
+    }
   }
 }
