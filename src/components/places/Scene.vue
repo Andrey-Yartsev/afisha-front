@@ -76,8 +76,5 @@ export default {
   span {
     color: #555;
   }
-  .vk {
-    flex-grow: 20;
-  }
 }
 </style>
