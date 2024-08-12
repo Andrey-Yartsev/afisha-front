@@ -1,13 +1,10 @@
-import Vue from "vue";
-import Router from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 
-import Afisha from "../components/afisha/Scene";
-import AfishaSearch from "../components/afisha/afishaSearch/Scene";
-import Contacts from "../components/contacts/Scene";
-import Places from "../components/places/Scene";
-import Place from "../components/place/Scene";
-
-Vue.use(Router);
+import Afisha from "../components/afisha/Scene.vue";
+import AfishaSearch from "../components/afisha/afishaSearch/Scene.vue";
+import Contacts from "../components/contacts/Scene.vue";
+import Places from "../components/places/Scene.vue";
+import Place from "../components/place/Scene.vue";
 
 const routes = [
   {
@@ -35,10 +32,9 @@ const routes = [
   },
 ];
 
-export default new Router({
-  mode: "history",
-  base: __dirname,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 
-
+export default router;

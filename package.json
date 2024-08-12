@@ -1,54 +1,31 @@
 {
   "name": "afisha-front",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "deploy.sh"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "bulma": "^0.9.3",
-    "bulma-pageloader": "^0.3.0",
-    "core-js": "^3.6.5",
-    "moment": "^2.29.1",
-    "sass-loader": "^7.3.1",
+    "axios": "^1.7.3",
+    "bulma": "^1.0.2",
+    "moment": "^2.30.1",
+    "query-string": "^9.1.0",
+    "quill": "^2.0.2",
     "store": "^2.0.12",
-    "vue": "^2.6.11",
-    "vue-inputmask": "^0.2.1",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3",
+    "vue-datepicker-next": "^1.0.3",
     "vue-quill-editor": "^3.0.6",
-    "vue-router": "^3.5.3",
-    "vue2-datepicker": "^3.10.4",
-    "vuex": "^3.6.2"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.48.0",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@vitejs/plugin-vue": "^5.0.5",
+    "node-sass": "^9.0.0",
+    "sass-embedded": "^1.77.8",
+    "sass-loader": "^16.0.0",
+    "vite": "^5.3.1"
+  }
 }

@@ -17,5 +17,5 @@ export default async (apiPath, options) => {
     options.body = JSON.stringify(options.data);
   }
   // console.log(options);
-  return await fetch(process.env.VUE_APP_API_URL + "/" + apiPath, options);
+  return await fetch(import.meta.env.VUE_APP_API_URL + "/" + apiPath, options);
 };

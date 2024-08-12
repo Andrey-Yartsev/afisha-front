@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Card from "../Card";
-// import Map from "@/components/maps/MapLink";
+import Card from "../Card.vue";
+// import Map from "@/components/maps/MapLink.vue";
 
 export default {
   name: "AfishaScene",

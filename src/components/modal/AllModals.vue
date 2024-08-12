@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import ErrorModal from "./ErrorModal";
-import ConfirmModal from "./ConfirmModal";
-import LoginModal from "./LoginModal";
-import AddEventModal from "./AddEventModal";
-import EditEventModal from "./EditEventModal";
+import ErrorModal from "./ErrorModal.vue";
+import ConfirmModal from "./ConfirmModal.vue";
+import LoginModal from "./LoginModal.vue";
+import AddEventModal from "./AddEventModal.vue";
+import EditEventModal from "./EditEventModal.vue";
 
 export default {
   name: "AllModals",

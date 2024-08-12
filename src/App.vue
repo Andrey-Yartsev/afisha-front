@@ -40,8 +40,12 @@
   </div>
 </template>
 
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>
+
 <script>
-import AllModals from "@/components/modal/AllModals";
+import AllModals from "@/components/modal/AllModals.vue";
 import BrowserStore from "store";
 
 export default {
@@ -72,7 +76,7 @@ export default {
       this.$store.dispatch("adminAuth/logout");
     },
     vkLogin() {
-      window.location = process.env.VUE_APP_API_URL + "/auth/vkontakte";
+      window.location = import.meta.env.VUE_APP_API_URL + "/auth/vkontakte";
     },
     vkLoginLoading() {
       return this.$store.state.auth.authLoading;

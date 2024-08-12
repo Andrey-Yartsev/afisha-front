@@ -7,12 +7,12 @@
       <button class="button" @click="addEvent">Добавить событие</button>
       <div class="column calend">
         <Datepicker
-          v-if="!existsLoading"
-          :lang="lang"
-          v-model="date"
-          :disabled-date="isDisabledDate"
-          format="DD.MM.YYYY"
-          @change="closeAll"
+            v-if="!existsLoading"
+            :lang="lang"
+            v-model="date"
+            :disabled-date="isDisabledDate"
+            format="DD.MM.YYYY"
+            @change="closeAll"
         />
       </div>
     </div>
@@ -41,13 +41,13 @@
         <div v-if="lastUpdated.length === 0" class="no-items">Ничего нет</div>
         <template v-else>
           <Card
-            v-for="(v, i) in lastUpdated"
-            :card="v"
-            :key="i"
-            :ref="'card' + i"
-            @toggle="opened => closeExcepting(opened, i)"
-            :showDay="true"
-            :showUpdated="true"
+              v-for="(v, i) in lastUpdated"
+              :card="v"
+              :key="i"
+              :ref="'card' + i"
+              @toggle="opened => closeExcepting(opened, i)"
+              :showDay="true"
+              :showUpdated="true"
           />
         </template>
       </div>
@@ -56,8 +56,8 @@
 </template>
 
 <script>
-  import Card from "./Card";
-  import Datepicker from 'vue2-datepicker';
+  import Card from "./Card.vue";
+  import Datepicker from 'vue-datepicker-next';
   import moment from 'moment';
   import BrowserStore from 'store';
 
@@ -186,7 +186,7 @@
               message: "Войти через ВК",
               onOk: () => {
                 BrowserStore.set('openAddBoxAfterLogin', true);
-                window.location = process.env.VUE_APP_API_URL + "/auth/vkontakte";
+                window.location = import.meta.env.VUE_APP_API_URL + "/auth/vkontakte";
               }
             }
           });

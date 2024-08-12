@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import AfishaSearchBox from "../afisha/afishaSearch/SearchBox";
+import AfishaSearchBox from "../afisha/afishaSearch/SearchBox.vue";
 
 export default {
   name: "PlacesScene",

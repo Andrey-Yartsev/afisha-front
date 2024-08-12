@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SearchBox from "./SearchBox";
+import SearchBox from "./SearchBox.vue";
 
 export default {
   name: "AfishaScene",

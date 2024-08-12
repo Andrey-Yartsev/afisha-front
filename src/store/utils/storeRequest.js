@@ -6,6 +6,7 @@ import BrowserStore from "store";
 // import Router from "@/router";
 
 const isOffline = () => {
+  return true;
   return global.navigator && global.navigator.onLine === false;
 };
 
@@ -24,13 +25,13 @@ const storeRequest = (
     commit(prefix + "Success", false);
 
     if (isOffline()) {
-      dispatch(
-        "global/flashToast",
-        { text: "Internet connection problems" },
-        {
-          root: true
-        }
-      );
+      // dispatch(
+      //   "global/flashToast",
+      //   { text: "Internet connection problems" },
+      //   {
+      //     root: true
+      //   }
+      // );
       commit(prefix + "Requested");
       return;
     }

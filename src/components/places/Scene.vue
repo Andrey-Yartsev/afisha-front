@@ -10,7 +10,9 @@
       </router-link>
       <a v-if="place.vk" class="vk"
          target="_blank"
-         :href="'https://vk.com/' + place.vk"><img src="/img/vk-logo.png"></a>
+         :href="'https://vk.com/' + place.vk">
+<!--        <img src="/img/vk-logo.png">-->
+      </a>
 <!--      <span class="icon" @click="gotoMap(place.name)">-->
 <!--        <i class="fas fa-location-arrow" aria-hidden="true"></i>-->
 <!--      </span>-->
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-const axios = require('axios').default;
+import axios from 'axios';
 
 export default {
   name: "PlacesScene",
